@@ -1,0 +1,83 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+struct Node {
+    int data;
+    struct Node* next;
+};
+
+struct Node* head = NULL;
+struct Node* tail = NULL;
+
+void addFirst(int data) {
+    struct Node* newNode = (struct Node*)malloc(sizeof(struct Node));
+    newNode->data = data;
+    newNode->next = NULL;
+
+    if (head == NULL) {
+        head = tail = newNode;
+        return;
+    }
+
+    newNode->next = head;
+    head = newNode;
+}
+
+void addLast(int data) {
+    struct Node* newNode = (struct Node*)malloc(sizeof(struct Node));
+    newNode->data = data;
+    newNode->next = NULL;
+
+    if (head == NULL) {
+        head = tail = newNode;
+        return;
+    }
+
+    tail->next = newNode;
+    tail = newNode;
+}
+
+void print() {
+    struct Node* temp = head;
+    while (temp != NULL) {
+        printf("%d ", temp->data);
+        temp = temp->next;
+    }
+    printf("\n");
+}
+
+void add(int idx, int data) {
+    if (idx == 0) {
+        addFirst(data);
+        return;
+    }
+
+    struct Node* newNode = (struct Node*)malloc(sizeof(struct Node));
+    newNode->data = data;
+    newNode->next = NULL;
+
+    struct Node* temp = head;
+    int i = 0;
+    while (i < idx - 1) {
+        temp = temp->next;
+        i++;
+    }
+
+    newNode->next = temp->next;
+    temp->next = newNode;
+}
+
+int main() {
+    print();
+    addFirst(2);
+    print();
+    addFirst(1);
+    print();
+    addLast(3);
+    print();
+    addLast(4);
+    add(2, 9);
+    print();
+
+    return 0;
+}
